@@ -221,7 +221,7 @@ class Association_Field extends Field {
 		$per_page = $this->get_items_per_page();
 		$offset   = ($args['page'] - 1) * $per_page;
 
-		$sql_queries .= " ORDER BY `title` ASC LIMIT {$per_page} OFFSET {$offset}";
+		$sql_queries .= " ORDER BY `date` DESC LIMIT {$per_page} OFFSET {$offset}";
 
 		$results = $wpdb->get_results( $sql_queries );
 
@@ -451,6 +451,8 @@ class Association_Field extends Field {
 
 		$posts_query = new WP_Query( $args );
 
+		//print_r($posts_query);
+
 		remove_filter( 'posts_fields_request', array( $this, 'get_post_options_sql_select_clause' ) );
 
 		remove_filter( 'posts_groupby_request', '__return_empty_string' );
@@ -471,7 +473,7 @@ class Association_Field extends Field {
 	public function get_post_options_sql_select_clause( $fields ) {
 		global $wpdb;
 
-		return $fields . " , `{$wpdb->posts}`.`post_title` AS `title`, 'post' AS `type`, `{$wpdb->posts}`.`post_type` AS `subtype` ";
+		return $fields . " , `{$wpdb->posts}`.`post_title` AS `title`, 'post' AS `type`, `{$wpdb->posts}`.`post_type` AS `subtype`, `{$wpdb->posts}`.`post_date` AS `date` ";
 	}
 
 	/**
