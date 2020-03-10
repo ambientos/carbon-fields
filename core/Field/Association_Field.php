@@ -451,8 +451,6 @@ class Association_Field extends Field {
 
 		$posts_query = new WP_Query( $args );
 
-		//print_r($posts_query);
-
 		remove_filter( 'posts_fields_request', array( $this, 'get_post_options_sql_select_clause' ) );
 
 		remove_filter( 'posts_groupby_request', '__return_empty_string' );
